@@ -22,7 +22,7 @@ echo report.html | www
 
 **After you run that, open up your web browser and go to (for example) `http://127.0.0.1:5555/` to view it.**
 
-Of course, these arr simple (and rather useless) examples.
+Of course, these are simple (and rather useless) examples.
 
 The power of the **www** command is when you get command line tools to output something complex.
 Such as HTML or images.
@@ -35,4 +35,10 @@ For example:
 Or, also for example:
 ```
 cat DOCS.md | markdown --html4tag | www
+```
+
+
+You can also override what TCP port the HTTP server uses. You can do that with code like:
+```
+... | www --port=2323
 ```
