@@ -31,3 +31,8 @@ For example:
 ```
  cat log.txt | grep ERROR | awk '{print $4}' | histogram | htmlplot | www
 ```
+
+Or, also for example:
+```
+cat DOCS.md | markdown --html4tag | www
+```
