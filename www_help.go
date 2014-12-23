@@ -9,8 +9,10 @@ import "log"
 func www_help(port int) {
 
 	// Construct the help message.
-		html := `<html>
+		html := `<!DOCTYPE html>
+<html>
 	<head>
+		<meta charset="UTF-8" />
 		<title>www</title>
 	<head>
 
@@ -21,7 +23,7 @@ func www_help(port int) {
 		</p>
 		<p>
 			If you are seeing this message you may have forgotten to pipe something to
-			this command.
+			this <b>www</b> command.
 		</p>
 
 

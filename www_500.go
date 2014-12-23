@@ -9,10 +9,12 @@ import "log"
 func www_500(port int) {
 
 	// Construct the help message.
-		html := `<html>
+		html := `<!DOCTYPE html>
+<html>
 	<head>
+		<meta charset="UTF-8" />
 		<title>500 Internal Server Error | www</title>
-	<head>
+	</head>
 
 	<body>
 		<h1>Ooops! Something went wrong!</h1>
@@ -21,7 +23,7 @@ func www_500(port int) {
 		</p>
 		<p>
 			If you are seeing this message you may have tried sending something
-			that was way too big for www and your computer to handle.
+			that was way too big for this <b>www</b> command and your computer to handle.
 		</p>
 
 		<footer style="margin-top:7em;">

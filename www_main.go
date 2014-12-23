@@ -2,20 +2,23 @@ package main
 
 
 import "fmt"
+import "io"
 import "io/ioutil"
 import "net/http"
 import "log"
-import "os"
 
 
-func www_main(port int) {
+func www_main(port int, reader io.Reader) {
 
-	// Read everything from STDIN.
+	// Read everything from the reader.
+	//
+	// (This reader could be STDIN (i.e., os.Stdin) or it could be a file or pipe
+	// that was specified by name on the command line.)
 	//
 	// NOTE that if the user sends a never ending stream to this program or
 	// just a very very large stream to this program, that may cause problems!
 	//
-		bytes, err := ioutil.ReadAll(os.Stdin)
+		bytes, err := ioutil.ReadAll(reader)
 		if nil != err {
 			www_500(port)
 		}

@@ -26,6 +26,10 @@ func main() {
 
 	// Define a variable to store the demo mode.
 	//
+	// Demo modes let users see parts of this program that they wouldn't normally be able to see.
+	// (Such as being able to see what this program shows when a "500 Internal Server Error" happens,
+	// without actually having to have that error happen.)
+	//
 	// The default is NOT to run this in demo mode.
 	//
 		demo_mode_ptr := flag.String("demo", "none", "The demo mode to run in. (Default is \"none\".) Option is: \"500\".")
@@ -67,8 +71,33 @@ func main() {
 			have_input_on_stdin = false
 		}
 
+	// If we are NOT receiving input from STDIN, then...
+	// Check to see if this program should be receiving input from a file name or pipe name specified on the
+	// command line.
+	//
+	// NOTE that we only check this if we do NOT have input on the STDIN.
+	//
+	// Therefore, if the user sends an input stream on STDIN **and** species a file name (or pipe name) via
+	// the command line, because there was an input stream on STDIN the file name (or pipe name) specified
+	// on the command line WILL BE IGNORED.
+	//
+	// NOTE that we need flag.Parse() to run before checking this.
+	//
+		have_input_from_command_line := false
+		cmdin_name := ""
+
+		args := flag.Args()
+		if ! have_input_on_stdin && 1 <= len(args) {
+			arg0 := args[0]
+
+			if _, err := os.Stat(arg0); ! os.IsNotExist(err) {
+				have_input_from_command_line = true
+				cmdin_name = arg0
+			}
+		}
+
 	// Send a message to the user telling them how they can connect to the HTTP server.
-		fmt.Printf("\nView locally at URL:\nhttp://127.0.0.1:%d/\n\nPrese [CTRL]+[C] to quit.\n\n", *port_ptr)
+		fmt.Printf("\nView locally at URL:\nhttp://127.0.0.1:%d/\n\nPress [CTRL]+[C] to quit.\n\n", *port_ptr)
 
 	// Launch one the appropriate HTTP server.
 	//
@@ -82,9 +111,19 @@ func main() {
 			default:
 				switch have_input_on_stdin {
 					case true:
-						www_main(*port_ptr)
+						www_main(*port_ptr, os.Stdin)
 					case false:
-						www_help(*port_ptr)
+						switch have_input_from_command_line {
+							case true:
+								cmdin, err := os.Open(cmdin_name)
+								if nil != err {
+									www_500(*port_ptr)
+								} else {
+									www_main(*port_ptr, cmdin)
+								}
+							case false:
+								www_help(*port_ptr)
+						}
 				}
 		}
 }

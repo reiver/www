@@ -20,6 +20,11 @@ or:
 echo report.html | www
 ```
 
+or (in shells that support *process substitution*, such as bash and zsh):
+```
+www <(echo 'apple banana cherry')
+```
+
 **After you run that, open up your web browser and go to (for example) `http://127.0.0.1:5555/` to view it.**
 
 Of course, these are simple (and rather useless) examples.
