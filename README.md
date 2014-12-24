@@ -1,6 +1,6 @@
 # www
 
-**www** is a program that lets you send the output from one or more commands, in the terminal, to a web browser.
+**www** is a command line tool that lets you send the output from one or more commands, in the terminal, to a web browser.
 
 ## Usage
 
@@ -20,7 +20,12 @@ or:
 echo report.html | www
 ```
 
-or (in shells that support *process substitution*, such as bash and zsh):
+or:
+```
+echo '<html><body><h1>Hello world!</h1></body></html>' | www
+```
+
+or (in a shell that support *process substitution*, such as bash and zsh):
 ```
 www <(echo 'apple banana cherry')
 ```
@@ -29,8 +34,8 @@ www <(echo 'apple banana cherry')
 
 Of course, these are simple (and rather useless) examples.
 
-The power of the **www** command is when you get command line tools to output something complex.
-Such as HTML or images.
+The power of the **www** command is when you want to view the output that results from a complex set of
+command line calculations. Especially if the final result *is* or *can be transformed into* HTML or images.
 
 For example:
 ```
